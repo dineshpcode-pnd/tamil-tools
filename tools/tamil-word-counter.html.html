@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ் சொல் & எழுத்து எண்ணி | Word Counter Tamil</title>
+    <meta name="description" content="ஆன்லைனில் தமிழில் எழுதப்படும் கட்டுரைகளின் வார்த்தைகள் மற்றும் எழுத்துக்களை துல்லியமாக எண்ண உதவும் எளிய மென்பொருள்.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-amber-800 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-950 mt-4 mb-2">✍️ தமிழ் சொல் & எழுத்து எண்ணி</h1>
+        <p class="text-stone-600 mb-6 text-sm">கீழே உள்ள கட்டத்தில் உங்கள் தமிழ் உரையை உள்ளிடவும் அல்லது பேஸ்ட் செய்யவும்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+            <textarea id="text-input" oninput="countTamil()" rows="8" placeholder="இங்கு எழுதவும்..." class="w-full p-4 border border-stone-300 rounded-lg focus:outline-amber-700 text-stone-800 mb-4"></textarea>
+            
+            <div class="grid grid-cols-2 gap-4 text-center">
+                <div class="bg-stone-100 p-3 rounded-lg">
+                    <span class="block text-2xl font-bold text-stone-800" id="word-count">0</span>
+                    <span class="text-xs text-stone-500">வார்த்தைகள்</span>
+                </div>
+                <div class="bg-stone-100 p-3 rounded-lg">
+                    <span class="block text-2xl font-bold text-stone-800" id="char-count">0</span>
+                    <span class="text-xs text-stone-500">எழுத்துக்கள்</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function countTamil() {
+            const text = document.getElementById('text-input').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('word-count').innerText = words;
+            document.getElementById('char-count').innerText = chars;
+        }
+    </script>
+</body>
+</html>

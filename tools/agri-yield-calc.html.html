@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>விவசாய விளைச்சல் & உரக் கணக்கிடுவான் | தமிழ்த்தொழில்</title>
+    <meta name="description" content="உங்கள் விவசாய நிலத்திற்குத் தேவையான நைட்ரஜன், பாஸ்பரஸ் மற்றும் பொட்டாசியம் உர அளவுகளைக் கணக்கிடும் எளிய ஆன்லைன் கருவி.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style> body { background-color: #fffdf9; } </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-emerald-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-emerald-800 mt-4 mb-2">🌾 விவசாய விளைச்சல் & உரக் கணக்கிடுவான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">நிலத்தின் பரப்பளவை உள்ளிட்டு, தேவைப்படும் தோராயமான உரங்களின் அளவை உடனே தெரிந்து கொள்ளுங்கள் (பொதுவான பரிந்துரை).</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm mb-8">
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-stone-700 mb-2">நிலத்தின் பரப்பளவு (ஏக்கரில்):</label>
+                <input type="number" id="acres" value="1" min="0.1" step="0.1" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+            </div>
+            <button onclick="calculateAgri()" class="w-full bg-emerald-700 text-white font-bold py-3 rounded-lg hover:bg-emerald-800 transition">கணக்கிடு</button>
+
+            <div id="result" class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200 hidden">
+                <h3 class="font-bold text-emerald-900 mb-2">📊 பரிந்துரைக்கப்படும் உத்தேச அளவு:</h3>
+                <ul class="text-emerald-800 text-sm space-y-1">
+                    <li>🧪 நைட்ரஜன் (N): <span id="res-n" class="font-bold"></span> கிலோ</li>
+                    <li>🧪 பாஸ்பரஸ் (P): <span id="res-p" class="font-bold"></span> கிலோ</li>
+                    <li>🧪 பொட்டாசியம் (K): <span id="res-k" class="font-bold"></span> கிலோ</li>
+                </ul>
+            </div>
+        </div>
+
+        <article class="prose prose-stone text-sm text-stone-700 space-y-4 border-t pt-6">
+            <h2 class="text-xl font-bold text-stone-900">உர மேலாண்மை ஏன் முக்கியம்?</h2>
+            <p>விவசாயத்தில் மண்ணின் வளம் காக்க சரியான விகிதத்தில் உரமிடுவது அவசியமாகும். அளவுக்கு அதிகமான நைட்ரஜன் உரங்கள் செடியின் வளர்ச்சியைத் தூண்டினாலும், பூச்சித் தாக்குதலை அதிகரிக்கும். எனவே பயிரின் தேவைக்கேற்ப NPK அளவை திட்டமிடுவது நல்லது.</p>
+            <h3 class="text-md font-bold text-stone-800">கணக்கீட்டு முறை விளக்கம்:</h3>
+            <p>இக்கருவி ஒரு ஏக்கருக்கு சராசரியாக தேவைப்படும் 50kg:25kg:25kg என்ற உத்தேச பொதுப் பரிந்துரையின் அடிப்படையில் உருவாக்கப்பட்டுள்ளது. உங்களின் மண் பரிசோதனை அறிக்கையின் படி இதனை மாற்றி அமைப்பது இன்னும் சிறப்பானது.</p>
+        </article>
+    </div>
+
+    <script>
+        function calculateAgri() {
+            const acres = parseFloat(document.getElementById('acres').value);
+            if(isNaN(acres) || acres <= 0) return alert('சரியான ஏக்கர் அளவை உள்ளிடவும்');
+            
+            document.getElementById('res-n').innerText = (acres * 50).toFixed(1);
+            document.getElementById('res-p').innerText = (acres * 25).toFixed(1);
+            document.getElementById('res-k').innerText = (acres * 25).toFixed(1);
+            document.getElementById('result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
