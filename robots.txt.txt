@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /config/
+Disallow: /admin/
+
+# 🌐 Link directly to your master sitemap script configuration file
+Sitemap: https://tamil-tools.pages.dev/sitemap.xml

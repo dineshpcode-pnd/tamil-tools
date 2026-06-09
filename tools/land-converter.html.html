@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>நில அளவை மாற்றி (Tamil Land Area Converter) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-emerald-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">📐 நில அளவை மாற்றி</h1>
+        <p class="text-stone-600 mb-6 text-sm">சென்ட், ஏக்கா், சதுர அடி போன்ற நில அளவுகளை உடனுக்குடன் மற்ற அளவுகளுக்கு மாற்றிப் பாருங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">அளவு (Value):</label>
+                <input type="number" id="area-val" value="1" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">இதிலிருந்து (From Unit):</label>
+                <select id="from-unit" class="w-full p-3 border border-stone-300 rounded-lg bg-white focus:outline-emerald-600">
+                    <option value="cent">சென்ட் (Cent)</option>
+                    <option value="acre">ஏக்கர் (Acre)</option>
+                    <option value="sqft">சதுர அடி (Sq.Ft)</option>
+                    <option value="hectare">ஹெக்டேர் (Hectare)</option>
+                </select>
+            </div>
+
+            <button onclick="convertArea()" class="w-full bg-emerald-700 text-white font-bold py-3 rounded-lg hover:bg-emerald-800 transition">மாற்றுக</button>
+
+            <div class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl space-y-3 text-sm">
+                <div class="flex justify-between border-b border-stone-700 pb-1">
+                    <span>சென்ட் (Cent):</span> <span class="font-mono text-emerald-400" id="out-cent">0</span>
+                </div>
+                <div class="flex justify-between border-b border-stone-700 pb-1">
+                    <span>ஏக்கர் (Acre):</span> <span class="font-mono text-emerald-400" id="out-acre">0</span>
+                </div>
+                <div class="flex justify-between border-b border-stone-700 pb-1">
+                    <span>சதுர அடி (Sq.Ft):</span> <span class="font-mono text-emerald-400" id="out-sqft">0</span>
+                </div>
+                <div class="flex justify-between pb-1">
+                    <span>ஹெக்டேர் (Hectare):</span> <span class="font-mono text-emerald-400" id="out-hectare">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function convertArea() {
+            const val = parseFloat(document.getElementById('area-val').value) || 0;
+            const unit = document.getElementById('from-unit').value;
+
+            let sqft = 0;
+            if(unit === 'cent') sqft = val * 435.6;
+            else if(unit === 'acre') sqft = val * 43560;
+            else if(unit === 'sqft') sqft = val;
+            else if(unit === 'hectare') sqft = val * 107639;
+
+            document.getElementById('out-cent').innerText = (sqft / 435.6).toFixed(3);
+            document.getElementById('out-acre').innerText = (sqft / 43560).toFixed(4);
+            document.getElementById('out-sqft').innerText = sqft.toFixed(1);
+            document.getElementById('out-hectare').innerText = (sqft / 107639).toFixed(4);
+        }
+        convertArea();
+    </script>
+</body>
+</html>

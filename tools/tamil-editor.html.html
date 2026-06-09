@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ் உரை எழுதகம் | Simple Tamil Text Editor & Notepad</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-stone-600 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">✍️ தமிழ் ஆன்லைன் எழுதகம்</h1>
+        
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+            <textarea id="editor-area" rows="8" placeholder="உங்கள் தமிழ் உரையை இங்கு தட்டச்சு செய்து நகலெடுத்துக் கொள்ளலாம்..." class="w-full p-4 border border-stone-300 rounded-lg focus:outline-stone-600 text-stone-800 mb-4 bg-stone-50"></textarea>
+            <div class="flex gap-2">
+                <button onclick="copyTxt()" class="bg-stone-900 text-white font-semibold text-xs py-2 px-4 rounded-lg hover:bg-stone-800">நகலெடு (Copy)</button>
+                <button onclick="clearTxt()" class="bg-red-100 text-red-700 font-semibold text-xs py-2 px-4 rounded-lg hover:bg-red-200">அழி (Clear)</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function copyTxt() {
+            const area = document.getElementById('editor-area');
+            area.select();
+            document.execCommand('copy');
+            alert('உரை நகலெடுக்கப்பட்டது!');
+        }
+        function clearTxt() { document.getElementById('editor-area').value = ''; }
+    </script>
+</body>
+</html>

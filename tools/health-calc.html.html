@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>உடல்நலக் கணக்கிடுவான் (BMI & BMR Calculator Tamil) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-teal-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🏥 உடல்நலக் கணக்கிடுவான் (BMI)</h1>
+        <p class="text-stone-600 mb-6 text-sm">உங்கள் உயரம் மற்றும் எடையை உள்ளிட்டு, உங்களது உடல்திறன் குறியீட்டெண்ணை (BMI) உடனே தெரிந்து கொள்ளுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">உயரம் (Height in cm):</label>
+                    <input type="number" id="height" value="170" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-teal-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">எடை (Weight in kg):</label>
+                    <input type="number" id="weight" value="65" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-teal-600">
+                </div>
+            </div>
+
+            <button onclick="calcBMI()" class="w-full bg-teal-700 text-white font-bold py-3 rounded-lg hover:bg-teal-800 transition">கணக்கிடு</button>
+
+            <div id="bmi-result" class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl text-center hidden">
+                <span class="text-xs text-stone-400 block mb-1">உங்களது BMI குறியீடு</span>
+                <div class="text-3xl font-extrabold text-teal-400 mb-2"><span id="res-bmi">0.0</span></div>
+                <p class="text-sm font-medium" id="res-health-status"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calcBMI() {
+            const h = parseFloat(document.getElementById('height').value) / 100;
+            const w = parseFloat(document.getElementById('weight').value);
+            
+            if(!h || !w) return;
+            const bmi = w / (h * h);
+            
+            let msg = "";
+            if(bmi < 18.5) msg = "⚠️ உடல் எடை குறைவு (Underweight) - சத்தான உணவுகளை உண்ணுங்கள்!";
+            else if(bmi < 24.9) msg = "✅ சரியான உடல் எடை (Normal) - உங்கள் ஆரோக்கியம் சிறப்பாக உள்ளது!";
+            else if(bmi < 29.9) msg = "⚠️ அதிக உடல் எடை (Overweight) - முறையான உடற்பயிற்சி தேவை.";
+            else msg = "🚨 உடல் பருமன் (Obese) - மருத்துவர் மற்றும் உணவு நிபுணரை அணுகவும்.";
+
+            document.getElementById('res-bmi').innerText = bmi.toFixed(1);
+            document.getElementById('res-health-status').innerText = msg;
+            document.getElementById('bmi-result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>வயது கணக்கிடுவான் (Age Calculator Tamil) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-pink-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🎂 துல்லிய வயது கணக்கிடுவான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">உங்கள் பிறந்த தேதியை உள்ளிட்டு உங்கள் துல்லியமான வயது மற்றும் அடுத்த பிறந்தநாள் விவரங்களை அறியுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">பிறந்த தேதி (Date of Birth):</label>
+                <input type="date" id="dob" value="2000-01-01" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-pink-600 bg-white">
+            </div>
+
+            <button onclick="calcAge()" class="w-full bg-pink-700 text-white font-bold py-3 rounded-lg hover:bg-pink-800 transition">வயதைக் கணக்கிடு</button>
+
+            <div id="age-result" class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl text-center hidden space-y-2">
+                <div class="text-lg font-bold text-pink-400"><span id="res-years">0</span> வருடங்கள், <span id="res-months">0</span> மாதங்கள், <span id="res-days">0</span> நாட்கள்</div>
+                <p class="text-xs text-stone-400">உங்களது அடுத்த பிறந்தநாளுக்கு இன்னும் <span id="res-next" class="text-white font-bold">0</span> நாட்கள் மட்டுமே உள்ளன!</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calcAge() {
+            const dobValue = document.getElementById('dob').value;
+            if(!dobValue) return;
+
+            const dob = new Date(dobValue);
+            const now = new Date();
+
+            let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let days = now.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Next Birthday Countdown
+            let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+            if (now > nextBday) {
+                nextBday.setFullYear(now.getFullYear() + 1);
+            }
+            const diffTime = Math.abs(nextBday - now);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            document.getElementById('res-years').innerText = years;
+            document.getElementById('res-months').innerText = months;
+            document.getElementById('res-days').innerText = days;
+            document.getElementById('res-next').innerText = diffDays === 365 ? 0 : diffDays;
+            document.getElementById('age-result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

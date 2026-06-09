@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>திருக்குறள் தேடகம் | தமிழ்த்தொழில்</title>
+    <meta name="description" content="முக்கியமான திருக்குறள்கள் மற்றும் அதன் எளிய தமிழ் விளக்க உரையைத் தேடும் தளம்.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-red-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">📖 திருக்குறள் தேடகம்</h1>
+        <p class="text-stone-600 mb-6 text-sm">வார்த்தைகளை உள்ளிட்டு குறள் மற்றும் அதன் விளக்க உரையைத் துல்லியமாகத் தேடுங்கள்.</p>
+
+        <div class="mb-6">
+            <input type="text" id="kural-search" oninput="searchKural()" placeholder="குறள் அல்லது விளக்க வார்த்தைகளைத் தேடவும்..." class="w-full p-4 border border-stone-300 rounded-xl focus:outline-red-700 bg-white shadow-sm">
+        </div>
+
+        <div id="kural-container" class="space-y-4">
+            </div>
+    </div>
+
+    <script>
+        const kuralData = [
+            { no: 1, k: "அகர முதல எழுத்தெல்லாம் ஆதி<br>பகவன் முதற்றே உலகு.", m: "விளக்கம்: எழுத்துக்கள் எல்லாம் அகரத்தை அடிப்படையாகக் கொண்டிருக்கின்றன; அதுபோல உலகம் கடவுளை அடிப்படையாகக் கொண்டிருக்கிறது." },
+            { no: 2, k: "கற்க கசடறக் கற்பவை கற்றபின்<br>நிற்க அதற்குத் தக.", m: "விளக்கம்: கற்க வேண்டியவைகளைக் குற்றம் இல்லாமல் கற்க வேண்டும்; கற்ற பிறகு அந்தப் படிப்பிற்குத் தகுந்தபடி நடக்க வேண்டும்." },
+            { no: 3, k: "ஒழுக்கம் விழுப்பம் தரலான் ஒழுக்கம்<br>உயிரினும் ஓம்பப் படும்.", m: "விளக்கம்: ஒழுக்கம் எல்லாருக்கும் சிறப்பைத் தருவதால், அந்த ஒழுக்கத்தை உயிரை விட மேலானதாகக் காக்க வேண்டும்." },
+            { no: 4, k: "எப்பொருள் யார்யார்வாய்க் கேட்பினும் அப்பொருள்<br>மெய்ப்பொருள் காண்ப தறிவு.", m: "விளக்கம்: எந்தப் பொருளை யார் யார் சொல்லக் கேட்டாலும், அந்தச் சொல்லின் உண்மையான அர்த்தத்தைக் காண்பதே அறிவாகும்." },
+            { no: 5, k: "செயற்கரிய செய்வார் பெரியர் சிறியர்<br>செயற்கரிய செய்கலா தார்.", m: "விளக்கம்: செய்ய முடியாத அருமையான செயல்களைச் செய்ய வல்லவரே பெரியோர்; செய்ய முடியாதவர் சிறியோர்." },
+            { no: 6, k: "இன்னாசெய்தாரை ஒறுத்தல் அவர்நாண<br>நன்னயம் செய்து விடல்.", m: "விளக்கம்: நமக்குத் தீங்கு செய்தவரைத் தண்டிக்கும் வழி, அவர் வெட்கப்படும்படி அவருக்கு நல்லுதவி செய்வதுதான்." },
+            { no: 7, k: "கேடில் விழுச்செல்வம் கல்வி யொருவற்கு<br>மாடல்ல மற்றை யவை.", m: "விளக்கம்: ஒருவனுக்கு அழிவில்லாத சிறந்த செல்வம் கல்வியே ஆகும்; அதைத் தவிர மற்ற பொருட்கள் உண்மையான செல்வம் அல்ல." },
+            { no: 8, k: "துப்பார்க்குத் துப்பாய துப்பாக்கித் துப்பார்க்குத்<br>துப்பாய தூஉம் மழை.", m: "விளக்கம்: உண்பவர்க்கு நல்ல உணவுகளை உண்டாக்கித் தருவதோடு, பருகுவோருக்குத் தானும் ஓர் உணவாக இருப்பது மழையாகும்." },
+            { no: 9, k: "சொல்லுக சொல்லைப் பிறிதோர்சொல் அச்சொல்லை<br>வெல்லுஞ்சொல் இன்மை யறிந்து.", m: "விளக்கம்: நாம் பேசும் சொல்லை வேறு ஒரு சொல்லால் வெல்ல முடியாதவாறு சிறந்த சொற்களையே தேர்ந்தெடுத்துப் பேச வேண்டும்." },
+            { no: 10, k: "உழுதுண்டு வாழ்வாரே வாழ்வார்மற் றெல்லாம்<br>தொழுதுண்டு பின்சென் பவர்.", m: "விளக்கம்: உழவு செய்து அதனால் வாழ்கின்றவரே உரிமையோடு வாழ்கின்றவர்; மற்றவர் எல்லாரும் பிறரைத் தொழுது உண்டு பின் செல்பவரே." }
+        ];
+
+        function renderKurals(data) {
+            const container = document.getElementById('kural-container');
+            container.innerHTML = '';
+            
+            if(data.length === 0) {
+                container.innerHTML = `<p class="text-center text-stone-500 py-8 text-sm">தேடலுக்குரிய குறள்கள் எதுவும் கிடைக்கவில்லை!</p>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-5 rounded-xl border border-stone-200 shadow-sm";
+                div.innerHTML = `
+                    <span class="text-xs font-bold text-red-700 bg-red-50 px-2 py-1 rounded">குறள் ${item.no}</span>
+                    <p class="text-lg font-serif text-stone-900 mt-3 mb-2 leading-relaxed">${item.k}</p>
+                    <p class="text-xs text-stone-600 border-t pt-2 mt-2">${item.m}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function searchKural() {
+            const query = document.getElementById('kural-search').value.toLowerCase().trim();
+            const filtered = kuralData.filter(item => 
+                item.k.toLowerCase().includes(query) || 
+                item.m.toLowerCase().includes(query)
+            );
+            renderKurals(filtered);
+        }
+
+        // Initial Load
+        renderKurals(kuralData);
+    </script>
+</body>
+</html>

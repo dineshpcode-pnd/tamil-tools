@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தமிழ் நேர அளவி (Tamil Time Converter) | தமிழ்த்தொழில்</title>
+    <meta name="description" content="ஆங்கில நேரத்தை பாரம்பரிய தமிழ் நாழிகை மற்றும் விநாழிகையாக மாற்றும் எளிய ஆன்லைன் தளம்.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-amber-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">⏳ தமிழ் பாரம்பரிய நேர அளவி</h1>
+        <p class="text-stone-600 mb-6 text-sm">சூரிய உதயத்தை அடிப்படையாகக் கொண்ட நமது முன்னோர்களின் கால அளவை தற்கால நேரத்தோடு ஒப்பிட்டுப் பாருங்கள்.</p>
+
+        <div class="bg-gradient-to-br from-amber-600 to-orange-700 p-6 rounded-2xl text-white shadow-md text-center mb-8">
+            <span class="text-xs font-bold uppercase tracking-widest opacity-80 block mb-1">இன்றைய நேரத்தின் தமிழ் அளவு</span>
+            <div class="text-3xl font-extrabold mb-2" id="live-tamil-time">கணக்கிடப்படுகிறது...</div>
+            <p class="text-xs opacity-75">தற்போதைய ஆங்கில நேரம்: <span id="live-english-time"></span></p>
+        </div>
+
+        <article class="prose prose-stone text-sm text-stone-700 space-y-4 border-t pt-6">
+            <h3 class="text-lg font-bold text-stone-900">தமிழர் கால அளவு விளக்கம்:</h3>
+            <ul class="list-disc pl-5 space-y-1 text-stone-600">
+                <li><b>1 நாள்</b> = 60 நாழிகை (24 மணி நேரம்)</li>
+                <li><b>1 நாழிகை</b> = 24 நிமிடங்கள்</li>
+                <li><b>1 விநாழிகை</b> = 24 வினாடிகள்</li>
+                <li><b>1 சாமம் (யாமம்)</b> = 7.5 நாழிகை (3 மணி நேரம்)</li>
+            </ul>
+        </article>
+    </div>
+
+    <script>
+        function updateTamilTime() {
+            const now = new Date();
+            document.getElementById('live-english-time').innerText = now.toLocaleTimeString('ta-IN');
+
+            // Traditional Tamil time starts from Sunrise (Approx 6:00 AM)
+            let sunrise = new Date(now);
+            sunrise.setHours(6, 0, 0, 0);
+
+            let diffMs = now - sunrise;
+            if (diffMs < 0) {
+                // If before 6 AM, it belongs to previous day's calculation
+                diffMs += 24 * 60 * 60 * 1000;
+            }
+
+            const totalMinutes = diffMs / (1000 * 60);
+            const totalNaligai = totalMinutes / 24;
+            
+            const naligai = Math.floor(totalNaligai);
+            const vinaligai = Math.floor((totalNaligai - naligai) * 60);
+            const yamam = Math.floor(naligai / 7.5) + 1;
+
+            document.getElementById('live-tamil-time').innerHTML = `${naligai} நாழிகை, ${vinaligai} விநாழிகை <br><span class="text-sm font-medium opacity-90">(${yamam}-ஆம் சாமம்)</span>`;
+        }
+        
+        setInterval(updateTamilTime, 1000);
+        updateTamilTime();
+    </script>
+</body>
+</html>

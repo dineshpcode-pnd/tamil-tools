@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FD & RD வட்டி கணக்கிடுவான் | Fixed Deposit Calculator Tamil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-emerald-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🏦 FD நிலையான வைப்பு நிதி கணிப்பான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">வங்கி அல்லது அஞ்சலகத்தில் நீங்கள் வைப்பு செய்யும் தொகைக்கான கூட்டு வட்டி மற்றும் இறுதி முதிர்வுத் தொகையை உடனே கணக்கிடுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">முதலீட்டுத் தொகை (Principal Amount ₹):</label>
+                <input type="number" id="fd-amount" value="100000" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">வட்டி விகிதம் (% Per Year):</label>
+                    <input type="number" id="fd-rate" value="7.1" step="0.1" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">கால அளவு (வருடங்கள்):</label>
+                    <input type="number" id="fd-years" value="5" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+                </div>
+            </div>
+
+            <button onclick="calcFD()" class="w-full bg-emerald-700 text-white font-bold py-3 rounded-lg hover:bg-emerald-800 transition">முதிர்வுத் தொகை காண்க</button>
+
+            <div class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl space-y-2 text-sm text-center">
+                <span class="text-xs text-stone-400 block">5 வருடங்கள் கழித்து கிடைக்கும் மொத்தத் தொகை</span>
+                <div class="text-3xl font-extrabold text-emerald-400">₹<span id="res-fd-total">0.00</span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calcFD() {
+            const p = parseFloat(document.getElementById('fd-amount').value) || 0;
+            const r = parseFloat(document.getElementById('fd-rate').value) || 0;
+            const t = parseFloat(document.getElementById('fd-years').value) || 0;
+
+            // Quarterly compounding standard formula
+            const total = p * Math.pow((1 + (r / 4 / 100)), (4 * t));
+            document.getElementById('res-fd-total').innerText = total.toFixed(2);
+        }
+        calcFD();
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ஊக்கமூட்டும் பொன்மொழிகள் (Motivational Quotes Tamil) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-orange-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🔥 ஊக்கமூட்டும் பொன்மொழிகள்</h1>
+        <p class="text-stone-600 mb-6 text-sm">மன சோர்வை நீக்கி, உங்கள் இலக்குகளை அடைய உதவும் சிறந்த நேர்மறைச் சிந்தனைகள்.</p>
+
+        <div class="bg-white border border-orange-200 p-8 rounded-2xl shadow-sm text-center relative overflow-hidden mb-6">
+            <div class="text-6xl text-orange-200 opacity-30 absolute top-2 left-4 font-serif">“</div>
+            <p class="text-2xl font-bold text-stone-900 mb-4 px-6 leading-relaxed" id="quote-display">உங்களால் முடியும் என்று நம்புங்கள், பாதி கிணற்றைக் கடந்தாற்போல்!</p>
+            <p class="text-sm text-orange-700 font-bold" id="quote-author">- தினேஷ் பச்சியப்பன்</p>
+            
+            <button onclick="nextQuote()" class="mt-6 bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl hover:bg-orange-800 transition text-sm">அடுத்த பொன்மொழி &rarr;</button>
+        </div>
+    </div>
+    <script>
+        const quotes = [
+            { q: "Think positive for motivation, think negative to create breakthrough ideas!", a: "தினேஷ் பச்சியப்பன்" },
+            { q: "வெற்றி என்பது இறுதி அல்ல, தோல்வி என்பது ஆபத்து அல்ல; தொடர்வதற்கான துணிச்சலே முக்கியம்.", a: "வinston Churchill" },
+            { q: "உங்களை நீங்கள் மாற்றிக்கொள்ள விரும்பினால், உங்கள் எண்ணங்களை மாற்றத் தொடங்குங்கள்.", a: "நெப்போலியன் ஹில்" },
+            { q: "தடைகளைக் கண்டு தயங்கி நிற்காதே, அவை உன்னை செதுக்க வந்த உளி!", a: "தமிழ் பழமொழி" }
+        ];
+
+        function nextQuote() {
+            const random = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-display').innerText = random.q;
+            document.getElementById('quote-author').innerText = `- ${random.a}`;
+        }
+        nextQuote();
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தங்க நகை விலை கணக்கிடுவான் | Gold Rate Calculator Tamil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-amber-800 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🏆 தங்க நகை விலை கணக்கிடுவான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">இன்றைய தங்கம் விலை, சேதாரம் மற்றும் GST வரியைச் சேர்த்து நகையின் இறுதித் தொகையைக் கணக்கிடுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">1 கிராம் தங்கம் விலை (₹):</label>
+                    <input type="number" id="gold-rate" value="7500" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-amber-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">நகையின் எடை (Grams):</label>
+                    <input type="number" id="gold-weight" value="8" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-amber-600">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">சேதாரம் (Wastage %):</label>
+                    <input type="number" id="wastage" value="12" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-amber-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">நகைக் கடை GST (%):</label>
+                    <input type="number" id="gold-gst" value="3" readonly class="w-full p-3 border border-stone-300 rounded-lg bg-stone-100 text-stone-500">
+                </div>
+            </div>
+
+            <button onclick="calculateGold()" class="w-full bg-amber-700 text-white font-bold py-3 rounded-lg hover:bg-amber-800 transition">இறுதி விலையைக் கணக்கிடு</button>
+
+            <div class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl space-y-2 text-sm">
+                <div class="flex justify-between border-b border-stone-700 pb-2">
+                    <span>அசல் தங்கம் விலை:</span> <span>₹<span id="res-gold-base">0.00</span></span>
+                </div>
+                <div class="flex justify-between border-b border-stone-700 pb-2">
+                    <span>சேதாரத் தொகை:</span> <span>₹<span id="res-gold-waste">0.00</span></span>
+                </div>
+                <div class="flex justify-between border-b border-stone-700 pb-2">
+                    <span>3% GST வரி அளவு:</span> <span>₹<span id="res-gold-tax">0.00</span></span>
+                </div>
+                <div class="flex justify-between text-lg font-bold text-amber-400 pt-2">
+                    <span>மொத்த இறுதித் தொகை:</span> <span>₹<span id="res-gold-total">0.00</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculateGold() {
+            const rate = parseFloat(document.getElementById('gold-rate').value) || 0;
+            const weight = parseFloat(document.getElementById('gold-weight').value) || 0;
+            const wastePercent = parseFloat(document.getElementById('wastage').value) || 0;
+
+            const basePrice = rate * weight;
+            const wastagePrice = basePrice * (wastePercent / 100);
+            const subTotal = basePrice + wastagePrice;
+            const gstPrice = subTotal * 0.03;
+            const totalPrice = subTotal + gstPrice;
+
+            document.getElementById('res-gold-base').innerText = basePrice.toFixed(2);
+            document.getElementById('res-gold-waste').innerText = wastagePrice.toFixed(2);
+            document.getElementById('res-gold-tax').innerText = gstPrice.toFixed(2);
+            document.getElementById('res-gold-total').innerText = totalPrice.toFixed(2);
+        }
+        calculateGold();
+    </script>
+</body>
+</html>

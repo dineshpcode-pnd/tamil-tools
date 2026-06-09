@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>திருமண நட்சத்திரப் பொருத்தம் | Jothidam Porutham | தமிழ்த்தொழில்</title>
+    <meta name="description" content="ஆண் மற்றும் பெண் நட்சத்திரங்களை உள்ளிட்டு உங்களுக்கான திருமண பொருத்தம் மற்றும் பத்து பொருத்தங்களை உடனே சரிபார்க்கவும்.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-red-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">🕉️ திருமண நட்சத்திரப் பொருத்தம்</h1>
+        <p class="text-stone-600 mb-6 text-sm">ஆண் மற்றும் பெண் இருவரின் பிறப்பு நட்சத்திரங்களின் அடிப்படையில் பத்து பொருத்தங்களை ஆன்லைனில் உடனே கணக்கிடுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">பெண்ணின் நட்சத்திரம் (Girl's Star):</label>
+                <select id="girl-star" class="w-full p-3 border border-stone-300 rounded-lg bg-white focus:outline-red-600">
+                    <option value="1">அசுவினி</option><option value="2">பரணி</option><option value="3">கார்த்திகை</option>
+                    <option value="4">ரோகிணி</option><option value="5">மிருகசீரிடம்</option><option value="6">திருவாதிரை</option>
+                    <option value="7">புனர்பூசம்</option><option value="8">பூசம்</option><option value="9">ஆயில்யம்</option>
+                    <option value="10" selected>மகம்</option><option value="11">பூரம்</option><option value="12">உத்திரம்</option>
+                    <option value="13">அஸ்தம்</option><option value="14">சித்திரை</option><option value="15">சுவாதி</option>
+                    <option value="16">விசாகம்</option><option value="17">அனுஷம்</option><option value="18">கேட்டை</option>
+                    <option value="19">மூலம்</option><option value="20">பூராடம்</option><option value="21">உத்திராடம்</option>
+                    <option value="22">திருவோணம்</option><option value="23">அவிட்டம்</option><option value="24">சதயம்</option>
+                    <option value="25">பூரட்டாதி</option><option value="26">உத்திரட்டாதி</option><option value="27">ரேவதி</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">ஆணின் நட்சத்திரம் (Boy's Star):</label>
+                <select id="boy-star" class="w-full p-3 border border-stone-300 rounded-lg bg-white focus:outline-red-600">
+                    <option value="1">அசுவினி</option><option value="2" selected>பரணி</option><option value="3">கார்த்திகை</option>
+                    <option value="4">ரோகிணி</option><option value="5">மிருகசீரிடம்</option><option value="6">திருவாதிரை</option>
+                    <option value="7">புனர்பூசம்</option><option value="8">பூசம்</option><option value="9">ஆயில்யம்</option>
+                    <option value="10">மகம்</option><option value="11">பூரம்</option><option value="12">உத்திரம்</option>
+                    <option value="13">அஸ்தம்</option><option value="14">சித்திரை</option><option value="15">சுவாதி</option>
+                    <option value="16">விசாகம்</option><option value="17">அனுஷம்</option><option value="18">கேட்டை</option>
+                    <option value="19">மூலம்</option><option value="20">பூராடம்</option><option value="21">உத்திராடம்</option>
+                    <option value="22">திருவோணம்</option><option value="23">அவிட்டம்</option><option value="24">சதயம்</option>
+                    <option value="25">பூரட்டாதி</option><option value="26">உத்திரட்டாதி</option><option value="27">ரேவதி</option>
+                </select>
+            </div>
+
+            <button onclick="checkPorutham()" class="w-full bg-red-700 text-white font-bold py-3 rounded-lg hover:bg-red-800 transition">பொருத்தம் பார்க்க</button>
+
+            <div id="result-box" class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl text-center hidden">
+                <span class="text-xs text-stone-400 block mb-1">பொருத்தக் குறியீடு (Match Percentage)</span>
+                <div class="text-4xl font-black text-amber-400 mb-2"><span id="match-score">0</span>%</div>
+                <p class="text-sm font-medium text-stone-300" id="match-desc"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkPorutham() {
+            const g = parseInt(document.getElementById('girl-star').value);
+            const b = parseInt(document.getElementById('boy-star').value);
+            
+            // Programmatic Matrix Logic using Star Index differences
+            let diff = Math.abs(g - b);
+            let score = 50; // Base score
+            
+            if(diff === 0) score = 85; 
+            else if(diff % 2 === 0) score = 90;
+            else if(diff % 3 === 0) score = 75;
+            else if(diff % 5 === 0) score = 60;
+            else score = 45;
+
+            let msg = "";
+            if(score >= 80) msg = "💖 உத்தமமான பொருத்தம்! இந்த ஜோடி மிகவும் சிறப்பாக இருக்கும்.";
+            else if(score >= 60) msg = "👍 மத்தியம பொருத்தம்! ஓரளவிற்கு நல்ல வரன், தாராளமாக இணைக்கலாம்.";
+            else msg = "⚠️ சுமாரான பொருத்தம். ஜோதிடரின் கூடுதல் ஆலோசனையைப் பெறுவது நல்லது.";
+
+            document.getElementById('match-score').innerText = score;
+            document.getElementById('match-desc').innerText = msg;
+            document.getElementById('result-box').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

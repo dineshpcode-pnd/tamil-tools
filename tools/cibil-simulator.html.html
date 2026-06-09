@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIBIL ஸ்கோர் கணக்கிடுவான் (CIBIL Score Simulator) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-sky-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">📊 சிபில் (CIBIL) ஸ்கோர் கணிப்பான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">சில எளிய கேள்விகளுக்குப் பதிலளிப்பதன் மூலம் உங்கள் தோராயமான சிபில் மதிப்பெண்ணை உடனே அறிந்து கொள்ளுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">நீங்கள் கடன்களை (EMI) சரியான தேதியில் செலுத்துகிறீர்களா?</label>
+                <select id="emi-pay" class="w-full p-3 border border-stone-300 rounded-lg bg-white">
+                    <option value="300">ஆம், எப்போதும் சரியான தேதியில் செலுத்துகிறேன்</option>
+                    <option value="150">சில நேரங்களில் தாமதமாகும்</option>
+                    <option value="50">அடிக்கடி தாமதமாகும் / கட்டவில்லை</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">உங்களிடம் எத்தனை கிரெடிட் கார்டுகள் / கடன்கள் உள்ளன?</label>
+                <select id="loan-count" class="w-full p-3 border border-stone-300 rounded-lg bg-white">
+                    <option value="200">1 அல்லது 2 (மிதமான அளவிலான கடன்கள்)</option>
+                    <option value="150">கடன்கள் ஏதும் இல்லை (No Credit History)</option>
+                    <option value="100">4-க்கும் மேல் (அதிகப்படியான கடன்கள்)</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">உங்களது கிரெடிட் கார்டு வரம்பில் (Limit) எத்தனை சதவீதம் பயன்படுத்துகிறீர்கள்?</label>
+                <select id="cc-util" class="w-full p-3 border border-stone-300 rounded-lg bg-white">
+                    <option value="250">30% க்கும் குறைவு (சிறப்பானது)</option>
+                    <option value="150">30% முதல் 70% வரை</option>
+                    <option value="50">70% க்கும் மேல் (முழுமையாகப் பயன்படுத்துகிறேன்)</option>
+                </select>
+            </div>
+
+            <button onclick="estimateCibil()" class="w-full bg-sky-700 text-white font-bold py-3 rounded-lg hover:bg-sky-800 transition">மதிப்பெண்ணைக் கணக்கிடு</button>
+
+            <div id="cibil-result" class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl text-center hidden">
+                <span class="text-xs text-stone-400 block mb-1">உங்களது தோராயமான சிபில் ஸ்கோர்</span>
+                <div class="text-4xl font-black text-sky-400 mb-2" id="res-score">0</div>
+                <p class="text-sm font-medium text-stone-300" id="res-status"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function estimateCibil() {
+            const emi = parseInt(document.getElementById('emi-pay').value);
+            const loan = parseInt(document.getElementById('loan-count').value);
+            const cc = parseInt(document.getElementById('cc-util').value);
+            
+            let total = emi + loan + cc + 150; // Base baseline scale
+            if(total > 900) total = 900;
+            if(total < 300) total = 300;
+
+            let status = "";
+            if(total >= 750) status = "🤩 சிறப்பானது (Excellent)! உங்களுக்கு எளிதாகக் கடன் கிடைக்கும்.";
+            else if(total >= 650) status = "👍 பரவாயில்லை (Good). ஓரளவிற்கு நல்ல ஸ்கோர்.";
+            else status = "⚠️ கவனம் தேவை (Poor)! கடன்களைச் சரியாகச் செலுத்துவதன் மூலம் இதை உயர்த்தலாம்.";
+
+            document.getElementById('res-score').innerText = total;
+            document.getElementById('res-status').innerText = status;
+            document.getElementById('cibil-result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

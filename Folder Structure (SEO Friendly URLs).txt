@@ -1,0 +1,22 @@
+/ (Root Directory)
+├── index.html                  (Home Page)
+├── robots.txt                  (For Google bot)
+├── sitemap.xml                 (For Search Console)
+│
+├── tools/                      (எல்லா Tools-க்கும் ஒரு Folder)
+│   ├── agri-yield-calc.html    
+│   ├── tamil-word-counter.html 
+│   ├── age-calculator.html     
+│   ├── gst-calculator.html     
+│   ├── emi-calculator.html     
+│   └── tamil-time.html         (தமிழ் நேர அளவீடு)
+│
+├── blog/                       (கட்டுரைகள் & Guides)
+│   ├── index.html              (Blog Home)
+│   ├── save-food-waste.html    
+│   ├── cibil-score-guide.html  
+│   └── electricity-bill-kwh.html (Energy Meter Details)
+│
+└── assets/                     (பொதுவான Files)
+    ├── img/                    (OG images, Icons)
+    └── js/                     (பொதுவான ஸ்கிரிப்ட்ஸ்)

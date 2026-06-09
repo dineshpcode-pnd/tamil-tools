@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>போமோடோரோ கவனம் கடிகாரம் | Pomodoro Timer Tamil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-xl mx-auto px-4 py-10 text-center">
+        <a href="/" class="text-sm text-red-700 hover:underline block mb-4">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-2xl font-bold text-stone-900 mb-6">⏱️ போமோடோரோ கவனம் கடிகாரம்</h1>
+        <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-md inline-block w-full">
+            <div class="text-6xl font-mono font-black text-red-600 mb-6" id="timer-display">25:00</div>
+            <div class="flex justify-center gap-4">
+                <button onclick="startTimer()" class="bg-red-600 text-white px-6 py-2 rounded-xl font-bold text-sm">Start</button>
+                <button onclick="pauseTimer()" class="bg-stone-200 text-stone-700 px-6 py-2 rounded-xl font-bold text-sm">Pause</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let time = 1500, timer = null;
+        function updateDisplay() {
+            let m = Math.floor(time / 60), s = time % 60;
+            document.getElementById('timer-display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+        function startTimer() {
+            if(timer) return;
+            timer = setInterval(() => {
+                if(time > 0) { time--; updateDisplay(); }
+                else { clearInterval(timer); alert('நேரம் முடிந்தது! சிறிய இடைவேளை எடுங்கள்.'); }
+            }, 1000);
+        }
+        function pauseTimer() { clearInterval(timer); timer = null; }
+    </script>
+</body>
+</html>

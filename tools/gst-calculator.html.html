@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>துல்லியமான GST கணக்கிடுவான் | தமிழ்த்தொழில்</title>
+    <meta name="description" content="உங்கள் வணிகத்திற்கான GST (CGST, SGST, IGST) அளவுகளை எளிதாகக் கணக்கிடும் ஆன்லைன் கருவி.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-emerald-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">📊 துல்லியமான GST கணக்கிடுவான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">தொகை மற்றும் GST சதவீதத்தை உள்ளிட்டு உங்களுக்கான வரியை உடனே கணக்கிடுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm mb-8 space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">ஆரம்பத் தொகை (Amount ₹):</label>
+                <input type="number" id="amount" value="1000" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">GST சதவீதம் (%):</label>
+                <select id="gst-rate" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600 bg-white">
+                    <option value="5">5%</option>
+                    <option value="12">12%</option>
+                    <option value="18" selected>18%</option>
+                    <option value="28">28%</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">வரி வகை:</label>
+                    <div class="flex space-x-2">
+                        <button onclick="setGstType('add')" id="btn-add" class="flex-1 bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm">GST சேர்க்க (+)</button>
+                        <button onclick="setGstType('remove')" id="btn-remove" class="flex-1 bg-stone-200 text-stone-700 font-bold py-2 px-3 rounded-lg text-sm hover:bg-stone-300">GST நீக்க (-)</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">வணிக இடம்:</label>
+                    <select id="state-type" onchange="calculateGst()" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-emerald-600 bg-white text-sm">
+                        <option value="intra">மாநிலத்திற்குள் (CGST + SGST)</option>
+                        <option value="inter">வெளி மாநிலம் (IGST)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="gst-result" class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl space-y-3">
+                <div class="flex justify-between border-b border-stone-700 pb-2">
+                    <span>பொருளின் அசல் விலை:</span>
+                    <span class="font-bold text-emerald-400">₹<span id="res-base">0.00</span></span>
+                </div>
+                <div id="cgst-row" class="flex justify-between text-sm text-stone-400">
+                    <span>CGST:</span>
+                    <span>₹<span id="res-cgst">0.00</span></span>
+                </div>
+                <div id="sgst-row" class="flex justify-between text-sm text-stone-400">
+                    <span>SGST:</span>
+                    <span>₹<span id="res-sgst">0.00</span></span>
+                </div>
+                <div id="igst-row" class="flex justify-between text-sm text-stone-400 hidden">
+                    <span>IGST:</span>
+                    <span>₹<span id="res-igst">0.00</span></span>
+                </div>
+                <div class="flex justify-between text-sm text-stone-400 border-b border-stone-700 pb-2">
+                    <span>மொத்த வரி அளவு:</span>
+                    <span>₹<span id="res-tax">0.00</span></span>
+                </div>
+                <div class="flex justify-between text-lg font-bold">
+                    <span>மொத்தத் தொகை (Total):</span>
+                    <span class="text-emerald-400">₹<span id="res-total">0.00</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gstType = 'add';
+        const amountInput = document.getElementById('amount');
+        const gstRateSelect = document.getElementById('gst-rate');
+        
+        amountInput.addEventListener('input', calculateGst);
+        gstRateSelect.addEventListener('change', calculateGst);
+
+        function setGstType(type) {
+            gstType = type;
+            if(type === 'add') {
+                document.getElementById('btn-add').className = "flex-1 bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm";
+                document.getElementById('btn-remove').className = "flex-1 bg-stone-200 text-stone-700 font-bold py-2 px-3 rounded-lg text-sm hover:bg-stone-300";
+            } else {
+                document.getElementById('btn-remove').className = "flex-1 bg-emerald-700 text-white font-bold py-2 px-3 rounded-lg text-sm";
+                document.getElementById('btn-add').className = "flex-1 bg-stone-200 text-stone-700 font-bold py-2 px-3 rounded-lg text-sm hover:bg-stone-300";
+            }
+            calculateGst();
+        }
+
+        function calculateGst() {
+            const amount = parseFloat(amountInput.value) || 0;
+            const rate = parseFloat(gstRateSelect.value);
+            const isInter = document.getElementById('state-type').value === 'inter';
+
+            let baseAmount = 0;
+            let taxAmount = 0;
+            let totalAmount = 0;
+
+            if(gstType === 'add') {
+                baseAmount = amount;
+                taxAmount = amount * (rate / 100);
+                totalAmount = baseAmount + taxAmount;
+            } else {
+                totalAmount = amount;
+                baseAmount = amount / (1 + (rate / 100));
+                taxAmount = totalAmount - baseAmount;
+            }
+
+            document.getElementById('res-base').innerText = baseAmount.toFixed(2);
+            document.getElementById('res-tax').innerText = taxAmount.toFixed(2);
+            document.getElementById('res-total').innerText = totalAmount.toFixed(2);
+
+            if(isInter) {
+                document.getElementById('igst-row').classList.remove('hidden');
+                document.getElementById('cgst-row').classList.add('hidden');
+                document.getElementById('sgst-row').classList.add('hidden');
+                document.getElementById('res-igst').innerText = taxAmount.toFixed(2);
+            } else {
+                document.getElementById('igst-row').classList.add('hidden');
+                document.getElementById('cgst-row').classList.remove('hidden');
+                document.getElementById('sgst-row').classList.remove('hidden');
+                document.getElementById('res-cgst').innerText = (taxAmount / 2).toFixed(2);
+                document.getElementById('res-sgst').innerText = (taxAmount / 2).toFixed(2);
+            }
+        }
+        calculateGst();
+    </script>
+</body>
+</html>

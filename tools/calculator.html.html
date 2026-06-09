@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>சாதாரண கணக்கிடுவான் (Standard Calculator) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-md mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-stone-600 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-2xl font-bold text-stone-900 mt-4 mb-4">🧮 சாதாரண கணக்கிடுவான்</h1>
+
+        <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-md">
+            <input type="text" id="display" readonly class="w-full text-right text-3xl font-mono p-4 bg-stone-100 rounded-xl mb-4 text-stone-900 border border-stone-200" placeholder="0">
+            
+            <div class="grid grid-cols-4 gap-2 font-bold text-lg">
+                <button onclick="clearDisplay()" class="p-4 bg-red-100 text-red-700 rounded-xl hover:bg-red-200">C</button>
+                <button onclick="appendValue('/')" class="p-4 bg-stone-100 text-stone-700 rounded-xl hover:bg-stone-200">/</button>
+                <button onclick="appendValue('*')" class="p-4 bg-stone-100 text-stone-700 rounded-xl hover:bg-stone-200">*</button>
+                <button onclick="appendValue('-')" class="p-4 bg-stone-100 text-stone-700 rounded-xl hover:bg-stone-200">-</button>
+
+                <button onclick="appendValue('7')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">7</button>
+                <button onclick="appendValue('8')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">8</button>
+                <button onclick="appendValue('9')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">9</button>
+                <button onclick="appendValue('+')" class="p-4 row-span-2 bg-stone-100 text-stone-700 rounded-xl flex items-center justify-center hover:bg-stone-200">+</button>
+
+                <button onclick="appendValue('4')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">4</button>
+                <button onclick="appendValue('5')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">5</button>
+                <button onclick="appendValue('6')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">6</button>
+
+                <button onclick="appendValue('1')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">1</button>
+                <button onclick="appendValue('2')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">2</button>
+                <button onclick="appendValue('3')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">3</button>
+                <button onclick="solve()" class="p-4 row-span-2 bg-emerald-700 text-white rounded-xl flex items-center justify-center hover:bg-emerald-800">=</button>
+
+                <button onclick="appendValue('0')" class="p-4 col-span-2 bg-stone-50 rounded-xl hover:bg-stone-200">0</button>
+                <button onclick="appendValue('.')" class="p-4 bg-stone-50 rounded-xl hover:bg-stone-200">.</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const disp = document.getElementById('display');
+        function appendValue(val) { disp.value += val; }
+        function clearDisplay() { disp.value = ''; }
+        function solve() {
+            try { disp.value = eval(disp.value) || 0; } 
+            catch { disp.value = 'Error'; }
+        }
+    </script>
+</body>
+</html>

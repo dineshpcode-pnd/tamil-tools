@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI கணக்கிடுவான் (Loan EMI Calculator) | தமிழ்த்தொழில்</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-stone-50 font-sans antialiased text-stone-800">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+        <a href="/" class="text-sm text-indigo-700 hover:underline">&larr; முகப்பிற்குச் செல்ல</a>
+        <h1 class="text-3xl font-bold text-stone-900 mt-4 mb-2">💰 கடன் EMI கணக்கிடுவான்</h1>
+        <p class="text-stone-600 mb-6 text-sm">வீட்டுக் கடன், வாகனக் கடன் அல்லது தனிநபர் கடனுக்கான மாதாந்திரத் தவணையை எளிதாகக் கணக்கிடுங்கள்.</p>
+
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-stone-700 mb-2">கடன் தொகை (Loan Amount ₹):</label>
+                <input type="number" id="loan" value="500000" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-indigo-600">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">வட்டி விகிதம் (% Per Year):</label>
+                    <input type="number" id="interest" value="9.5" step="0.1" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-stone-700 mb-2">கால அளவு (Months):</label>
+                    <input type="number" id="tenure" value="60" class="w-full p-3 border border-stone-300 rounded-lg focus:outline-indigo-600">
+                </div>
+            </div>
+
+            <button onclick="calcEMI()" class="w-full bg-indigo-700 text-white font-bold py-3 rounded-lg hover:bg-indigo-800 transition">EMI கணக்கிடு</button>
+
+            <div class="mt-6 p-5 bg-stone-900 text-stone-100 rounded-xl space-y-2 text-sm">
+                <div class="flex justify-between border-b border-stone-700 pb-2 text-base font-bold">
+                    <span>மாதாந்திர தவணை (Monthly EMI):</span>
+                    <span class="text-indigo-400">₹<span id="res-emi">0.00</span></span>
+                </div>
+                <div class="flex justify-between pt-2">
+                    <span>மொத்த வட்டித் தொகை:</span>
+                    <span>₹<span id="res-total-interest">0.00</span></span>
+                </div>
+                <div class="flex justify-between">
+                    <span>மொத்தத் திருப்பிச் செலுத்தும் தொகை:</span>
+                    <span>₹<span id="res-total-pay">0.00</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calcEMI() {
+            const p = parseFloat(document.getElementById('loan').value) || 0;
+            const r = (parseFloat(document.getElementById('interest').value) / 12) / 100;
+            const n = parseFloat(document.getElementById('tenure').value) || 0;
+
+            if(p === 0 || r === 0 || n === 0) return;
+
+            const emi = (p * r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1);
+            const totalPay = emi * n;
+            const totalInterest = totalPay - p;
+
+            document.getElementById('res-emi').innerText = emi.toFixed(2);
+            document.getElementById('res-total-interest').innerText = totalInterest.toFixed(2);
+            document.getElementById('res-total-pay').innerText = totalPay.toFixed(2);
+        }
+        calcEMI();
+    </script>
+</body>
+</html>
